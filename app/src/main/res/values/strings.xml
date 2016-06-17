@@ -4,7 +4,7 @@
     <string name="author_name">By Farooq Ezhar</string>
     <string name="author_url">www.farooqezhar.com</string>
     <string name="enter_name">Enter your name</string>
-    <string name="btn_join">JOIN</string>
+    <string name="btn_join">Log in with Facebook</string>
     <string name="btn_send">Send</string>
     <string name="hint_name">Full Name</string>
     <string name="hint_email">Email</string>
@@ -13,4 +13,5 @@
     <string name="err_msg_name">Enter your full name</string>
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_password">Enter the password</string>
+    <string name="action_settings">Log out</string>
 </resources>

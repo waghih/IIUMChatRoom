@@ -7,6 +7,8 @@ import android.database.DataSetObserver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -106,13 +109,19 @@ public class MainActivity extends Activity {
         SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
         mUsername = prefs.getString("username", null);
         if(mUsername == null) {
-            Intent i = getIntent();
-            mUsername = i.getStringExtra("name");
+            Bundle inBundle = getIntent().getExtras();
+            String name = inBundle.get("name").toString();
+            String surname = inBundle.get("surname").toString();
+            mUsername = name+" "+surname;
+            System.out.println(mUsername);
             prefs.edit().putString("username", mUsername).commit();
         }
         else{
-            Intent i = getIntent();
-            mUsername = i.getStringExtra("name");
+            Bundle inBundle = getIntent().getExtras();
+            String name = inBundle.get("name").toString();
+            String surname = inBundle.get("surname").toString();
+            mUsername = name+" "+surname;
+            System.out.println(mUsername);
             prefs.edit().putString("username", mUsername).commit();
         }
     }
@@ -126,5 +135,33 @@ public class MainActivity extends Activity {
             mFirebaseRef.push().setValue(chat);
             inputText.setText("");
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            logout();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    public void logout(){
+        LoginManager.getInstance().logOut();
+        Intent login = new Intent(MainActivity.this, JoinActivity.class);
+        startActivity(login);
+        finish();
     }
 }
